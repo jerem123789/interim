@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démo Intérim - Lamin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .score {
+            font-size: 4em;
+            font-weight: bold;
+            text-align: center;
+            color: #667eea;
+        }
+        .badge {
+            display: inline-block;
+            background: #e8f5e9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Présélection Intérim - Démo Lamin</h1>
+        
+        <div class="card">
+            <h2>👨 Candidat : Lamin Mohamed</h2>
+            <p><strong>🎯 Poste :</strong> Manutentionnaire</p>
+            <p><strong>🎂 Âge :</strong> 28 ans</p>
+            <p><strong>💼 Expérience :</strong> 3 ans en logistique</p>
+            <p><strong>🛠️ Compétences :</strong></p>
+            <div>
+                <span class="badge">Manutention</span>
+                <span class="badge">CACES 1</span>
+                <span class="badge">Gestion stock</span>
+                <span class="badge">Logistique</span>
+            </div>
+            <p><strong>🎓 Certifications :</strong></p>
+            <div>
+                <span class="badge">CACES 1</span>
+                <span class="badge">SST</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📦 Mission : Manutentionnaire Logistique Lyon</h2>
+            <p><strong>🏭 Entreprise :</strong> Logistique Lyon</p>
+            <p><strong>📍 Lieu :</strong> Lyon 7e</p>
+            <p><strong>💰 Salaire :</strong> 12€/h</p>
+            <p><strong>⚙️ Compétences requises :</strong></p>
+            <div>
+                <span class="badge">Manutention</span>
+                <span class="badge">CACES 1</span>
+                <span class="badge">Gestion stock</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🎯 Score de Compatibilité</h2>
+            <div class="score">87%</div>
+            <p style="text-align: center; margin-top: 20px;">
+                <strong>✅ Excellent match !</strong><br>
+                Lamin a toutes les compétences requises<br>
+                Expérience parfaite (3 ans)<br>
+                Salaire compatible (11.5-13€/h)<br>
+                Disponibilité alignée
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>🏆 Classement pour cette mission</h2>
+            <ol style="font-size: 1.2em;">
+                <li><strong>1er - Lamin</strong> : 87%</li>
+                <li>2e - Kevin : 62%</li>
+                <li>3e - Sophie : 25%</li>
+            </ol>
+        </div>
+
+        <div class="card" style="text-align: center;">
+            <p><strong>Pour tester avec l'API complète :</strong></p>
+            <p style="margin-top: 10px;">Voir le fichier <code>GUIDE_TEST.md</code> dans le repo</p>
+        </div>
+    </div>
+</body>
+</html>
