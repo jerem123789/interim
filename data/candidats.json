@@ -1,0 +1,218 @@
+{
+  "candidats": [
+    {
+      "id": "lamin-001",
+      "nom": "Lamin",
+      "prenom": "Mohamed",
+      "email": "lamin.mohamed@example.com",
+      "telephone": "0612345678",
+      "age": 28,
+      "experience": {
+        "anneesTotal": 3,
+        "domaineInterim": true,
+        "postes": [
+          {
+            "titre": "Manutentionnaire",
+            "entreprise": "LogiTrans",
+            "duree": "18 mois",
+            "competences": ["manutention", "gestion stock", "chariot élévateur"]
+          },
+          {
+            "titre": "Préparateur de commandes",
+            "entreprise": "Warehouse Pro",
+            "duree": "12 mois",
+            "competences": ["préparation commandes", "logistique", "CACES 1"]
+          }
+        ]
+      },
+      "competences": [
+        "manutention",
+        "logistique",
+        "gestion stock",
+        "chariot élévateur",
+        "CACES 1",
+        "travail équipe"
+      ],
+      "certifications": [
+        "CACES 1",
+        "SST (Sauveteur Secouriste du Travail)"
+      ],
+      "langues": [
+        {"langue": "Français", "niveau": "Courant"},
+        {"langue": "Anglais", "niveau": "Notions"}
+      ],
+      "disponibilite": {
+        "type": "immediate",
+        "horaires": ["journée", "2x8"],
+        "mobilite": "20km"
+      },
+      "pretentionsSalariales": {
+        "min": 11.5,
+        "max": 13,
+        "devise": "EUR",
+        "unite": "heure"
+      },
+      "motivations": "Intéressé par des missions longues durée dans la logistique. Rigoureux et ponctuel."
+    },
+    {
+      "id": "sophie-002",
+      "nom": "Dubois",
+      "prenom": "Sophie",
+      "email": "sophie.dubois@example.com",
+      "telephone": "0623456789",
+      "age": 32,
+      "experience": {
+        "anneesTotal": 8,
+        "domaineInterim": true,
+        "postes": [
+          {
+            "titre": "Assistante administrative",
+            "entreprise": "AdminPlus",
+            "duree": "4 ans",
+            "competences": ["bureautique", "accueil", "gestion planning"]
+          },
+          {
+            "titre": "Secrétaire comptable",
+            "entreprise": "Compta Services",
+            "duree": "3 ans",
+            "competences": ["comptabilité", "facturation", "Excel"]
+          }
+        ]
+      },
+      "competences": [
+        "bureautique",
+        "Word",
+        "Excel",
+        "PowerPoint",
+        "comptabilité",
+        "accueil téléphonique",
+        "gestion agenda"
+      ],
+      "certifications": [
+        "TOSA Excel - Niveau Avancé"
+      ],
+      "langues": [
+        {"langue": "Français", "niveau": "Langue maternelle"},
+        {"langue": "Anglais", "niveau": "Courant"},
+        {"langue": "Espagnol", "niveau": "Intermédiaire"}
+      ],
+      "disponibilite": {
+        "type": "sous 2 semaines",
+        "horaires": ["journée"],
+        "mobilite": "30km"
+      },
+      "pretentionsSalariales": {
+        "min": 2000,
+        "max": 2400,
+        "devise": "EUR",
+        "unite": "mois"
+      },
+      "motivations": "Recherche stabilité dans un poste administratif. Organisée et polyvalente."
+    },
+    {
+      "id": "kevin-003",
+      "nom": "Martin",
+      "prenom": "Kevin",
+      "email": "kevin.martin@example.com",
+      "telephone": "0634567890",
+      "age": 24,
+      "experience": {
+        "anneesTotal": 2,
+        "domaineInterim": true,
+        "postes": [
+          {
+            "titre": "Agent de production",
+            "entreprise": "IndustriePro",
+            "duree": "14 mois",
+            "competences": ["assemblage", "contrôle qualité", "travail posté"]
+          },
+          {
+            "titre": "Opérateur ligne",
+            "entreprise": "ManufactPlus",
+            "duree": "8 mois",
+            "competences": ["conduite ligne", "maintenance niveau 1"]
+          }
+        ]
+      },
+      "competences": [
+        "assemblage",
+        "contrôle qualité",
+        "travail posté",
+        "conduite ligne production",
+        "maintenance niveau 1"
+      ],
+      "certifications": [],
+      "langues": [
+        {"langue": "Français", "niveau": "Langue maternelle"}
+      ],
+      "disponibilite": {
+        "type": "immediate",
+        "horaires": ["journée", "2x8", "3x8", "nuit"],
+        "mobilite": "40km"
+      },
+      "pretentionsSalariales": {
+        "min": 11,
+        "max": 12.5,
+        "devise": "EUR",
+        "unite": "heure"
+      },
+      "motivations": "Flexible sur les horaires, cherche missions variées en production."
+    }
+  ],
+  "missions": [
+    {
+      "id": "mission-log-001",
+      "titre": "Manutentionnaire H/F",
+      "entreprise": "Logistique Lyon",
+      "secteur": "Logistique",
+      "description": "Recherche manutentionnaire pour préparation de commandes",
+      "competencesRequises": ["manutention", "CACES 1", "gestion stock"],
+      "experience": "1-3 ans",
+      "horaires": ["journée", "2x8"],
+      "duree": "6 mois renouvelable",
+      "salaire": {
+        "taux": 12,
+        "devise": "EUR",
+        "unite": "heure"
+      },
+      "lieu": "Lyon 7e",
+      "dateDebut": "2026-02-15"
+    },
+    {
+      "id": "mission-admin-001",
+      "titre": "Assistant(e) administratif(ve)",
+      "entreprise": "Cabinet Conseil RH",
+      "secteur": "Administration",
+      "description": "Assistance administrative et comptable pour cabinet RH",
+      "competencesRequises": ["bureautique", "Excel", "accueil téléphonique", "comptabilité"],
+      "experience": "3-5 ans",
+      "horaires": ["journée"],
+      "duree": "3 mois",
+      "salaire": {
+        "taux": 2200,
+        "devise": "EUR",
+        "unite": "mois"
+      },
+      "lieu": "Villeurbanne",
+      "dateDebut": "2026-03-01"
+    },
+    {
+      "id": "mission-prod-001",
+      "titre": "Opérateur de production H/F",
+      "entreprise": "Industrie Alimentaire",
+      "secteur": "Production",
+      "description": "Opérateur ligne de conditionnement produits alimentaires",
+      "competencesRequises": ["travail posté", "contrôle qualité", "assemblage"],
+      "experience": "1-2 ans",
+      "horaires": ["2x8", "3x8"],
+      "duree": "12 mois",
+      "salaire": {
+        "taux": 11.8,
+        "devise": "EUR",
+        "unite": "heure"
+      },
+      "lieu": "Vénissieux",
+      "dateDebut": "2026-02-20"
+    }
+  ]
+}
