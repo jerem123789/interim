@@ -1,12 +1,845 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Preselection Interim</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Preselection Interim - Application de Gestion</title>
+      <style>
+                :root {
+                              --primary: #667eea;
+                              --primary-dark: #5a67d8;
+                              --secondary: #764ba2;
+                              --success: #48bb78;
+                              --warning: #ed8936;
+                              --danger: #f56565;
+                              --light: #f7fafc;
+                              --dark: #2d3748;
+                }
+
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+
+                body {
+                              font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                              background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+                              min-height: 100vh;
+                              color: var(--dark);
+                }
+
+                .navbar {
+                              background: rgba(255,255,255,0.95);
+                              padding: 1rem 2rem;
+                              box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                              display: flex;
+                              justify-content: space-between;
+                              align-items: center;
+                              position: sticky;
+                              top: 0;
+                              z-index: 100;
+                }
+
+                .logo {
+                              font-size: 1.5rem;
+                              font-weight: 700;
+                              color: var(--primary);
+                }
+
+                .nav-links {
+                              display: flex;
+                              gap: 1rem;
+                }
+
+                .nav-link {
+                              padding: 0.5rem 1rem;
+                              border-radius: 8px;
+                              cursor: pointer;
+                              transition: all 0.3s;
+                              border: none;
+                              background: transparent;
+                              font-size: 1rem;
+                }
+
+                .nav-link:hover, .nav-link.active {
+                              background: var(--primary);
+                              color: white;
+                }
+
+                .container {
+                              max-width: 1400px;
+                              margin: 0 auto;
+                              padding: 2rem;
+                }
+
+                .page { display: none; }
+                .page.active { display: block; }
+
+                .card {
+                              background: white;
+                              border-radius: 16px;
+                              padding: 1.5rem;
+                              margin-bottom: 1.5rem;
+                              box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                }
+
+                .card-header {
+                              display: flex;
+                              justify-content: space-between;
+                              align-items: center;
+                              margin-bottom: 1rem;
+                              padding-bottom: 1rem;
+                              border-bottom: 1px solid #eee;
+                }
+
+                .card-title {
+                              font-size: 1.3rem;
+                              color: var(--dark);
+                }
+
+                .grid {
+                              display: grid;
+                              grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                              gap: 1.5rem;
+                }
+
+                .stats-grid {
+                              display: grid;
+                              grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                              gap: 1rem;
+                              margin-bottom: 2rem;
+                }
+
+                .stat-card {
+                              background: white;
+                              border-radius: 12px;
+                              padding: 1.5rem;
+                              text-align: center;
+                              box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+                }
+
+                .stat-value {
+                              font-size: 2.5rem;
+                              font-weight: 700;
+                              color: var(--primary);
+                }
+
+                .stat-label {
+                              color: #718096;
+                              margin-top: 0.5rem;
+                }
+
+                .badge {
+                              display: inline-block;
+                              padding: 0.25rem 0.75rem;
+                              border-radius: 20px;
+                              font-size: 0.85rem;
+                              margin: 0.25rem;
+                }
+
+                .badge-success { background: #c6f6d5; color: #276749; }
+                .badge-warning { background: #feebc8; color: #c05621; }
+                .badge-primary { background: #e9d8fd; color: #553c9a; }
+                .badge-info { background: #bee3f8; color: #2b6cb0; }
+
+                .score-circle {
+                              width: 80px;
+                              height: 80px;
+                              border-radius: 50%;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              font-size: 1.5rem;
+                              font-weight: 700;
+                              color: white;
+                              margin: 0 auto;
+                }
+
+                .score-high { background: linear-gradient(135deg, #48bb78, #38a169); }
+                .score-medium { background: linear-gradient(135deg, #ed8936, #dd6b20); }
+                .score-low { background: linear-gradient(135deg, #f56565, #e53e3e); }
+
+                .form-group {
+                              margin-bottom: 1rem;
+                }
+
+                .form-label {
+                              display: block;
+                              margin-bottom: 0.5rem;
+                              font-weight: 500;
+                              color: var(--dark);
+                }
+
+                .form-input {
+                              width: 100%;
+                              padding: 0.75rem;
+                              border: 2px solid #e2e8f0;
+                              border-radius: 8px;
+                              font-size: 1rem;
+                              transition: border-color 0.3s;
+                }
+
+                .form-input:focus {
+                              outline: none;
+                              border-color: var(--primary);
+                }
+
+                .btn {
+                              padding: 0.75rem 1.5rem;
+                              border-radius: 8px;
+                              border: none;
+                              font-size: 1rem;
+                              cursor: pointer;
+                              transition: all 0.3s;
+                              display: inline-flex;
+                              align-items: center;
+                              gap: 0.5rem;
+                }
+
+                .btn-primary {
+                              background: var(--primary);
+                              color: white;
+                }
+
+                .btn-primary:hover {
+                              background: var(--primary-dark);
+                              transform: translateY(-2px);
+                }
+
+                .btn-success {
+                              background: var(--success);
+                              color: white;
+                }
+
+                .btn-sm {
+                              padding: 0.5rem 1rem;
+                              font-size: 0.9rem;
+                }
+
+                .candidate-card {
+                              position: relative;
+                              overflow: hidden;
+                }
+
+                .candidate-card::before {
+                              content: '';
+                              position: absolute;
+                              top: 0;
+                              left: 0;
+                              width: 4px;
+                              height: 100%;
+                              background: var(--primary);
+                }
+
+                .candidate-info {
+                              display: grid;
+                              grid-template-columns: 1fr auto;
+                              gap: 1rem;
+                              align-items: start;
+                }
+
+                .candidate-name {
+                              font-size: 1.2rem;
+                              font-weight: 600;
+                              color: var(--dark);
+                }
+
+                .candidate-details {
+                              display: flex;
+                              flex-wrap: wrap;
+                              gap: 0.5rem;
+                              margin-top: 0.5rem;
+                              font-size: 0.9rem;
+                              color: #718096;
+                }
+
+                .mission-card {
+                              border-left: 4px solid var(--secondary);
+                }
+
+                .search-box {
+                              display: flex;
+                              gap: 1rem;
+                              margin-bottom: 1.5rem;
+                }
+
+                .search-input {
+                              flex: 1;
+                              padding: 0.75rem 1rem;
+                              border: 2px solid #e2e8f0;
+                              border-radius: 8px;
+                              font-size: 1rem;
+                }
+
+                .filter-select {
+                              padding: 0.75rem 1rem;
+                              border: 2px solid #e2e8f0;
+                              border-radius: 8px;
+                              font-size: 1rem;
+                              background: white;
+                }
+
+                .matching-results {
+                              background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+                              color: white;
+                              padding: 2rem;
+                              border-radius: 16px;
+                              margin-top: 1.5rem;
+                }
+
+                .matching-title {
+                              font-size: 1.5rem;
+                              margin-bottom: 1rem;
+                }
+
+                .result-item {
+                              background: rgba(255,255,255,0.15);
+                              border-radius: 12px;
+                              padding: 1rem;
+                              margin-bottom: 0.75rem;
+                              display: flex;
+                              justify-content: space-between;
+                              align-items: center;
+                }
+
+                .result-rank {
+                              font-size: 1.5rem;
+                              font-weight: 700;
+                }
+
+                @media (max-width: 768px) {
+                              .grid { grid-template-columns: 1fr; }
+                              .stats-grid { grid-template-columns: repeat(2, 1fr); }
+                              .navbar { flex-direction: column; gap: 1rem; }
+                              .nav-links { flex-wrap: wrap; justify-content: center; }
+                }
+            </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+        <nav class="navbar">
+                  <div class="logo">🎯 Preselection Interim</div>div>
+                  <div class="nav-links">
+                                <button class="nav-link active" onclick="showPage('dashboard')">📊 Tableau de bord</button>button>
+                                <button class="nav-link" onclick="showPage('candidats')">👥 Candidats</button>button>
+                                <button class="nav-link" onclick="showPage('missions')">📋 Missions</button>button>
+                                <button class="nav-link" onclick="showPage('matching')">🔗 Matching</button>button>
+                                <button class="nav-link" onclick="showPage('nouveau')">➕ Nouveau candidat</button>button>
+                  </div>div>
+        </nav>nav>
+
+        <div class="container">
+                  <!-- Dashboard -->
+                  <div id="dashboard" class="page active">
+                                <h1 style="color: white; margin-bottom: 2rem;">📊 Tableau de bord</h1>h1>
+
+                                <div class="stats-grid">
+                                                  <div class="stat-card">
+                                                                        <div class="stat-value" id="stat-candidats">0</div>div>
+                                                                        <div class="stat-label">Candidats actifs</div>div>
+                                                  </div>div>
+                                                  <div class="stat-card">
+                                                                        <div class="stat-value" id="stat-missions">0</div>div>
+                                                                        <div class="stat-label">Missions ouvertes</div>div>
+                                                  </div>div>
+                                                  <div class="stat-card">
+                                                                        <div class="stat-value" id="stat-matches">0</div>div>
+                                                                        <div class="stat-label">Matches > 70%</div>div>
+                                                  </div>div>
+                                                  <div class="stat-card">
+                                                                        <div class="stat-value">87%</div>div>
+                                                                        <div class="stat-label">Taux de placement</div>div>
+                                                  </div>div>
+                                </div>div>
+
+                                <div class="grid">
+                                                  <div class="card">
+                                                                        <div class="card-header">
+                                                                                                  <h3 class="card-title">🏆 Top Candidats</h3>h3>
+                                                                        </div>div>
+                                                                        <div id="top-candidats"></div>div>
+                                                  </div>div>
+                                                  <div class="card">
+                                                                        <div class="card-header">
+                                                                                                  <h3 class="card-title">📋 Missions Urgentes</h3>h3>
+                                                                        </div>div>
+                                                                        <div id="urgent-missions"></div>div>
+                                                  </div>div>
+                                </div>div>
+                  </div>div>
+
+                  <!-- Candidats -->
+                  <div id="candidats" class="page">
+                                <h1 style="color: white; margin-bottom: 2rem;">👥 Liste des Candidats</h1>h1>
+
+                                <div class="card">
+                                                  <div class="search-box">
+                                                                        <input type="text" class="search-input" placeholder="🔍 Rechercher un candidat..." id="search-candidat" oninput="filterCandidats()">
+                                                                        <select class="filter-select" id="filter-competence" onchange="filterCandidats()">
+                                                                                                  <option value="">Toutes competences</option>option>
+                                                                                                  <option value="manutention">Manutention</option>option>
+                                                                                                  <option value="logistique">Logistique</option>option>
+                                                                                                  <option value="CACES">CACES</option>option>
+                                                                        </select>select>
+                                                  </div>div>
+                                                  <div class="grid" id="candidats-list"></div>div>
+                                </div>div>
+                  </div>div>
+
+                  <!-- Missions -->
+                  <div id="missions" class="page">
+                                <h1 style="color: white; margin-bottom: 2rem;">📋 Missions Disponibles</h1>h1>
+
+                                <div class="card">
+                                                  <div class="search-box">
+                                                                        <input type="text" class="search-input" placeholder="🔍 Rechercher une mission..." id="search-mission" oninput="filterMissions()">
+                                                                        <select class="filter-select" id="filter-lieu" onchange="filterMissions()">
+                                                                                                  <option value="">Tous les lieux</option>option>
+                                                                                                  <option value="Lyon">Lyon</option>option>
+                                                                                                  <option value="Paris">Paris</option>option>
+                                                                                                  <option value="Marseille">Marseille</option>option>
+                                                                        </select>select>
+                                                  </div>div>
+                                                  <div class="grid" id="missions-list"></div>div>
+                                </div>div>
+                  </div>div>
+
+                  <!-- Matching -->
+                  <div id="matching" class="page">
+                                <h1 style="color: white; margin-bottom: 2rem;">🔗 Matching Candidat-Mission</h1>h1>
+
+                                <div class="card">
+                                                  <div class="card-header">
+                                                                        <h3 class="card-title">Selectionnez une mission pour voir les candidats compatibles</h3>h3>
+                                                  </div>div>
+                                                  <select class="form-input" id="select-mission" onchange="calculateMatching()">
+                                                                        <option value="">-- Choisir une mission --</option>option>
+                                                  </select>select>
+
+                                                  <div id="matching-results" style="margin-top: 1.5rem;"></div>div>
+                                </div>div>
+                  </div>div>
+
+                  <!-- Nouveau Candidat -->
+                  <div id="nouveau" class="page">
+                                <h1 style="color: white; margin-bottom: 2rem;">➕ Nouveau Candidat</h1>h1>
+
+                                <div class="card">
+                                                  <form id="candidat-form" onsubmit="ajouterCandidat(event)">
+                                                                        <div class="grid">
+                                                                                                  <div>
+                                                                                                                                <div class="form-group">
+                                                                                                                                                                  <label class="form-label">Prenom *</label>label>
+                                                                                                                                                                  <input type="text" class="form-input" name="prenom" required>
+                                                                                                                                  </div>
+                                                                                                                                <div class="form-group">
+                                                                                                                                                                  <label class="form-label">Nom *</label>label>
+                                                                                                                                                                  <input type="text" class="form-input" name="nom" required>
+                                                                                                                                  </div>
+                                                                                                                                <div class="form-group">
+                                                                                                                                                                  <label class="form-label">Email *</label>label>
+                                                                                                                                                                  <input type="email" class="form-input" name="email" required>
+                                                                                                                                  </div>
+                                                                                                                                <div class="form-group">
+                                                                                                                                                                  <label class="form-label">Telephone</label>label>
+                                                                                                                                                                  <input type="tel" class="form-input" name="telephone">
+                                                                                                                                  </div>
+                                                                                                    </div>
+                                                                                                  <div>
+                                                                                                                                <div class="form-group">
+                                                                                                                                                                  <label class="form-label">Age</label>label>
+                                                                                                                                                                  <input type="number" class="form-input" name="age" min="18" max="70">
+                                                                                                                                  </div>
+                                                                                                                                <div class="form-group">
+                                                                                                                                                                  <label class="form-label">Experience (annees)</label>label>
+                                                                                                                                                                  <input type="number" class="form-input" name="experience" min="0" value="0">
+                                                                                                                                  </div>
+                                                                                                                                <div class="form-group">
+                                                                                                                                                                  <label class="form-label">Competences (separees par virgule)</label>label>
+                                                                                                                                                                  <input type="text" class="form-input" name="competences" placeholder="manutention, logistique...">
+                                                                                                                                  </div>
+                                                                                                                                <div class="form-group">
+                                                                                                                                                                  <label class="form-label">Disponibilite</label>label>
+                                                                                                                                                                  <select class="form-input" name="disponibilite">
+                                                                                                                                                                                                        <option value="immediate">Immediate</option>option>
+                                                                                                                                                                                                        <option value="1semaine">Sous 1 semaine</option>option>
+                                                                                                                                                                                                        <option value="2semaines">Sous 2 semaines</option>option>
+                                                                                                                                                                                                    </select>select>
+                                                                                                                                  </div>
+                                                                                                    </div>
+                                                                        </div>
+                                                                        <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                                                                                                  ✅ Enregistrer le candidat
+                                                                        </button>button>
+                                                  </form>form>
+                                </div>
+                  </div>
+        </div>
+
+        <script>
+                  // Donnees
+                  let candidats = [
+                    {
+                                      id: "lamin-001",
+                                      nom: "Lamin",
+                                      prenom: "Mohamed",
+                                      email: "lamin.mohamed@example.com",
+                                      telephone: "0612345678",
+                                      age: 28,
+                                      experience: { anneesTotal: 3, domaineInterim: true },
+                                      competences: ["manutention", "logistique", "gestion stock", "chariot elevateur", "CACES 1", "travail equipe"],
+                                      certifications: ["CACES 1", "SST"],
+                                      disponibilite: { type: "immediate", horaires: ["journee", "2x8"] },
+                                      pretentionsSalariales: { min: 11.5, max: 13 }
+                    },
+                    {
+                                      id: "kevin-002",
+                                      nom: "Durand",
+                                      prenom: "Kevin",
+                                      email: "kevin.durand@example.com",
+                                      telephone: "0698765432",
+                                      age: 24,
+                                      experience: { anneesTotal: 1, domaineInterim: false },
+                                      competences: ["manutention", "logistique"],
+                                      certifications: [],
+                                      disponibilite: { type: "1semaine", horaires: ["journee"] },
+                                      pretentionsSalariales: { min: 11, max: 12 }
+                    },
+                    {
+                                      id: "sophie-003",
+                                      nom: "Martin",
+                                      prenom: "Sophie",
+                                      email: "sophie.martin@example.com",
+                                      telephone: "0654321098",
+                                      age: 32,
+                                      experience: { anneesTotal: 5, domaineInterim: true },
+                                      competences: ["secretariat", "accueil", "gestion"],
+                                      certifications: ["BTS Assistant"],
+                                      disponibilite: { type: "immediate", horaires: ["journee"] },
+                                      pretentionsSalariales: { min: 13, max: 15 }
+                    }
+                            ];
+
+                  let missions = [
+                    {
+                                      id: "mission-001",
+                                      titre: "Manutentionnaire Logistique",
+                                      entreprise: "Logistique Lyon",
+                                      lieu: "Lyon 7e",
+                                      salaire: { taux: 12, unite: "heure" },
+                                      competencesRequises: ["manutention", "CACES 1", "gestion stock"],
+                                      experience: "2-5 ans",
+                                      horaires: ["journee", "2x8"],
+                                      duree: "3 mois",
+                                      urgent: true
+                    },
+                    {
+                                      id: "mission-002",
+                                      titre: "Preparateur de commandes",
+                                      entreprise: "Amazon Logistics",
+                                      lieu: "Paris Est",
+                                      salaire: { taux: 11.5, unite: "heure" },
+                                      competencesRequises: ["logistique", "preparation commandes"],
+                                      experience: "0-2 ans",
+                                      horaires: ["2x8", "nuit"],
+                                      duree: "6 mois",
+                                      urgent: false
+                    },
+                    {
+                                      id: "mission-003",
+                                      titre: "Assistant administratif",
+                                      entreprise: "Bureau Plus",
+                                      lieu: "Lyon Centre",
+                                      salaire: { taux: 13, unite: "heure" },
+                                      competencesRequises: ["secretariat", "accueil", "bureautique"],
+                                      experience: "3+ ans",
+                                      horaires: ["journee"],
+                                      duree: "CDI",
+                                      urgent: true
+                    }
+                            ];
+
+                  // Fonctions
+                  function showPage(pageId) {
+                                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                                document.getElementById(pageId).classList.add('active');
+                                event.target.classList.add('active');
+                  }
+
+                  function calculateScore(candidat, mission) {
+                                let score = 0;
+                                let details = {};
+
+                                // Competences (40 points)
+                                const candidatComp = candidat.competences.map(c => c.toLowerCase());
+                                const missionComp = mission.competencesRequises.map(c => c.toLowerCase());
+                                const matching = missionComp.filter(mc => 
+                                                  candidatComp.some(cc => cc.includes(mc) || mc.includes(cc))
+                                                                                );
+                                const compScore = (matching.length / missionComp.length) * 40;
+                                score += compScore;
+
+                                // Experience (30 points)
+                                const exp = candidat.experience.anneesTotal;
+                                if (exp >= 3) score += 30;
+                                else if (exp >= 1) score += 20;
+                                else score += 10;
+
+                                // Disponibilite (20 points)
+                                if (candidat.disponibilite.type === "immediate") score += 20;
+                                else if (candidat.disponibilite.type === "1semaine") score += 15;
+                                else score += 10;
+
+                                // Salaire (10 points)
+                                if (candidat.pretentionsSalariales.min <= mission.salaire.taux) score += 10;
+                                else if (candidat.pretentionsSalariales.min <= mission.salaire.taux * 1.1) score += 5;
+
+                                return Math.round(score);
+                  }
+
+                  function getScoreClass(score) {
+                                if (score >= 70) return 'score-high';
+                                if (score >= 40) return 'score-medium';
+                                return 'score-low';
+                  }
+
+                  function renderCandidats() {
+                                const container = document.getElementById('candidats-list');
+                                container.innerHTML = candidats.map(c => `
+                                                <div class="card candidate-card">
+                                                                    <div class="candidate-info">
+                                                                                            <div>
+                                                                                                                        <div class="candidate-name">${c.prenom} ${c.nom}</div>
+                                                                                                                                                    <div class="candidate-details">
+                                                                                                                                                                                    <span>📧 ${c.email}</span>
+                                                                                                                                                                                                                    <span>📞 ${c.telephone}</span>
+                                                                                                                                                                                                                                                    <span>🎂 ${c.age} ans</span>
+                                                                                                                                                                                                                                                                                    <span>💼 ${c.experience.anneesTotal} ans exp.</span>
+                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                            <div style="margin-top: 0.75rem;">
+                                                                                                                                                                                                                                                                                                                                                                            ${c.competences.slice(0,4).map(comp => 
+                                                                                                                                                                                                                                                                                                                                                                                                                  `<span class="badge badge-primary">${comp}</span>`
+                                                                                                                                                                                                                                                                                                                                                                                                                                           ).join('')}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ${c.competences.length > 4 ? `<span class="badge badge-info">+${c.competences.length - 4}</span>` : ''}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   <div style="margin-top: 0.5rem;">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ${c.certifications.map(cert => 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         `<span class="badge badge-success">${cert}</span>`
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ).join('')}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <span class="badge ${c.disponibilite.type === 'immediate' ? 'badge-success' : 'badge-warning'}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ${c.disponibilite.type === 'immediate' ? '✅ Disponible' : '⏳ ' + c.disponibilite.type}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      `).join('');
+                  }
+
+                  function renderMissions() {
+                                const container = document.getElementById('missions-list');
+                                container.innerHTML = missions.map(m => `
+                                                <div class="card mission-card">
+                                                                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                                                                                            <div>
+                                                                                                                        <h3 style="color: var(--secondary);">${m.titre}</h3>
+                                                                                                                                                    <p style="color: #718096; margin: 0.5rem 0;">🏭 ${m.entreprise} • 📍 ${m.lieu}</p>
+                                                                                                                                                                                <p><strong>💰 ${m.salaire.taux}€/${m.salaire.unite}</strong> • ⏱ ${m.duree}</p>
+                                                                                                                                                                                                            <div style="margin-top: 0.75rem;">
+                                                                                                                                                                                                                                            ${m.competencesRequises.map(comp => 
+                                                                                                                                                                                                                                                                                  `<span class="badge badge-info">${comp}</span>`
+                                                                                                                                                                                                                                                                                                        ).join('')}
+                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                    <div>
+                                                                                                                                                                                                                                                                                                                                                                                                                ${m.urgent ? '<span class="badge badge-warning">🔥 Urgent</span>' : ''}
+                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        `).join('');
+
+                                // Mise a jour du select
+                                const select = document.getElementById('select-mission');
+                                select.innerHTML = '<option value="">-- Choisir une mission --</option>' + 
+                                                  missions.map(m => `<option value="${m.id}">${m.titre} - ${m.entreprise}</option>`).join('');
+                  }
+
+                  function calculateMatching() {
+                                const missionId = document.getElementById('select-mission').value;
+                                const container = document.getElementById('matching-results');
+
+                                if (!missionId) {
+                                                  container.innerHTML = '';
+                                                  return;
+                                }
+
+                                const mission = missions.find(m => m.id === missionId);
+                                const results = candidats.map(c => ({
+                                                  candidat: c,
+                                                  score: calculateScore(c, mission)
+                                })).sort((a, b) => b.score - a.score);
+
+                                container.innerHTML = `
+                                                <div class="matching-results">
+                                                                    <h3 class="matching-title">🎯 Resultats pour: ${mission.titre}</h3>
+                                                                                        ${results.map((r, i) => `
+                                                                                                                <div class="result-item">
+                                                                                                                                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                                                                                                                                                            <span class="result-rank">#${i + 1}</span>
+                                                                                                                                                                                                            <div>
+                                                                                                                                                                                                                                                <strong>${r.candidat.prenom} ${r.candidat.nom}</strong>
+                                                                                                                                                                                                                                                                                    <div style="font-size: 0.9rem; opacity: 0.8;">
+                                                                                                                                                                                                                                                                                                                            ${r.candidat.competences.slice(0,3).join(', ')}
+                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="score-circle ${getScoreClass(r.score)}">${r.score}%</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    `).join('')}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                `;
+                  }
+
+                  function updateStats() {
+                                document.getElementById('stat-candidats').textContent = candidats.length;
+                                document.getElementById('stat-missions').textContent = missions.length;
+
+                                let goodMatches = 0;
+                                missions.forEach(m => {
+                                                  candidats.forEach(c => {
+                                                                        if (calculateScore(c, m) >= 70) goodMatches++;
+                                                  });
+                                });
+                                document.getElementById('stat-matches').textContent = goodMatches;
+                  }
+
+                  function renderTopCandidats() {
+                                const container = document.getElementById('top-candidats');
+                                const topCandidats = candidats.slice(0, 3);
+                                container.innerHTML = topCandidats.map((c, i) => `
+                                                <div style="padding: 0.75rem 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                                                                    <div>
+                                                                                            <strong>${i + 1}. ${c.prenom} ${c.nom}</strong>
+                                                                                                                    <div style="font-size: 0.85rem; color: #718096;">${c.experience.anneesTotal} ans exp.</div>
+                                                                                                                                        </div>
+                                                                                                                                                            <span class="badge ${c.disponibilite.type === 'immediate' ? 'badge-success' : 'badge-warning'}">
+                                                                                                                                                                                    ${c.disponibilite.type === 'immediate' ? 'Dispo' : 'Bientot'}
+                                                                                                                                                                                                        </span>
+                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                    `).join('');
+                  }
+
+                  function renderUrgentMissions() {
+                                const container = document.getElementById('urgent-missions');
+                                const urgent = missions.filter(m => m.urgent);
+                                container.innerHTML = urgent.map(m => `
+                                                <div style="padding: 0.75rem 0; border-bottom: 1px solid #eee;">
+                                                                    <strong>${m.titre}</strong>
+                                                                                        <div style="font-size: 0.85rem; color: #718096;">
+                                                                                                                ${m.entreprise} • ${m.lieu} • ${m.salaire.taux}€/h
+                                                                                                                                    </div>
+                                                                                                                                                    </div>
+                                                                                                                                                                `).join('');
+                  }
+
+                  function ajouterCandidat(e) {
+                                e.preventDefault();
+                                const form = e.target;
+                                const newCandidat = {
+                                                  id: 'candidat-' + Date.now(),
+                                                  nom: form.nom.value,
+                                                  prenom: form.prenom.value,
+                                                  email: form.email.value,
+                                                  telephone: form.telephone.value || '',
+                                                  age: parseInt(form.age.value) || 25,
+                                                  experience: { anneesTotal: parseInt(form.experience.value) || 0, domaineInterim: false },
+                                                  competences: form.competences.value.split(',').map(c => c.trim()).filter(c => c),
+                                                  certifications: [],
+                                                  disponibilite: { type: form.disponibilite.value, horaires: ["journee"] },
+                                                  pretentionsSalariales: { min: 11, max: 13 }
+                                };
+
+                                candidats.push(newCandidat);
+                                form.reset();
+                                renderCandidats();
+                                updateStats();
+                                alert('✅ Candidat ajoute avec succes!');
+                                showPage('candidats');
+                                document.querySelector('[onclick*="candidats"]').classList.add('active');
+                  }
+
+                  function filterCandidats() {
+                                const search = document.getElementById('search-candidat').value.toLowerCase();
+                                const competence = document.getElementById('filter-competence').value.toLowerCase();
+
+                                const filtered = candidats.filter(c => {
+                                                  const matchSearch = c.nom.toLowerCase().includes(search) || 
+                                                                                       c.prenom.toLowerCase().includes(search) ||
+                                                                                       c.email.toLowerCase().includes(search);
+                                                  const matchComp = !competence || c.competences.some(comp => comp.toLowerCase().includes(competence));
+                                                  return matchSearch && matchComp;
+                                });
+
+                                const container = document.getElementById('candidats-list');
+                                container.innerHTML = filtered.length ? filtered.map(c => `
+                                                <div class="card candidate-card">
+                                                                    <div class="candidate-info">
+                                                                                            <div>
+                                                                                                                        <div class="candidate-name">${c.prenom} ${c.nom}</div>
+                                                                                                                                                    <div class="candidate-details">
+                                                                                                                                                                                    <span>📧 ${c.email}</span>
+                                                                                                                                                                                                                    <span>💼 ${c.experience.anneesTotal} ans exp.</span>
+                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                            <div style="margin-top: 0.75rem;">
+                                                                                                                                                                                                                                                                                                            ${c.competences.slice(0,4).map(comp => 
+                                                                                                                                                                                                                                                                                                                                                  `<span class="badge badge-primary">${comp}</span>`
+                                                                                                                                                                                                                                                                                                                                                                           ).join('')}
+                                                                                                                                                                                                                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                               </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                   </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                               `).join('') : '<p style="text-align: center; color: #718096;">Aucun candidat trouve</p>';
+                  }
+
+                  function filterMissions() {
+                                const search = document.getElementById('search-mission').value.toLowerCase();
+                                const lieu = document.getElementById('filter-lieu').value;
+
+                                const filtered = missions.filter(m => {
+                                                  const matchSearch = m.titre.toLowerCase().includes(search) || 
+                                                                                       m.entreprise.toLowerCase().includes(search);
+                                                  const matchLieu = !lieu || m.lieu.includes(lieu);
+                                                  return matchSearch && matchLieu;
+                                });
+
+                                const container = document.getElementById('missions-list');
+                                container.innerHTML = filtered.length ? filtered.map(m => `
+                                                <div class="card mission-card">
+                                                                    <h3 style="color: var(--secondary);">${m.titre}</h3>
+                                                                                        <p style="color: #718096; margin: 0.5rem 0;">🏭 ${m.entreprise} • 📍 ${m.lieu}</p>
+                                                                                                            <p><strong>💰 ${m.salaire.taux}€/${m.salaire.unite}</strong></p>
+                                                                                                                                <div style="margin-top: 0.75rem;">
+                                                                                                                                                        ${m.competencesRequises.map(comp => 
+                                                                                                                                                                                      `<span class="badge badge-info">${comp}</span>`
+                                                                                                                                                                                                            ).join('')}
+                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                            `).join('') : '<p style="text-align: center; color: #718096;">Aucune mission trouvee</p>';
+                  }
+
+                  // Initialisation
+                  document.addEventListener('DOMContentLoaded', function() {
+                                renderCandidats();
+                                renderMissions();
+                                updateStats();
+                                renderTopCandidats();
+                                renderUrgentMissions();
+                  });
+        </script>
   </body>
-</html>
+</html>html>
+        </script>
+                                                                                                  </div>
+                                                                                                  </div>
+  </body>
+      </style></title>
+  </head>
